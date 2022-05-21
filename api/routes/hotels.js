@@ -2,17 +2,18 @@ import express  from 'express';
 import { createHotel, deleteHotel, getAllHotel, getHotel, UpdateHotel } from '../controllers/hotel.js';
 import Hotle from '../modles/Hotle.js';
 import { createError } from '../utils/error.js';
+import { verifyAdmin } from '../utils/VerifyToekn.js';
 
 const router = express.Router();
 
 // CREATE 
-router.post("/", createHotel)
+router.post("/", verifyAdmin ,createHotel)
 
 // UPDATE
-router.put("/:id", UpdateHotel )
+router.put("/:id",verifyAdmin , UpdateHotel )
 // DELETE
 
-router.delete('/:id', deleteHotel)
+router.delete('/:id',verifyAdmin , deleteHotel)
 // GET
 
 router.get('/:id', getHotel)

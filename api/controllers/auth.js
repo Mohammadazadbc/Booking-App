@@ -1,6 +1,7 @@
 import User from "../modles/User.js"
 import bcrypt from "bcryptjs"
 import { createError } from "../utils/error.js";
+import jwt from "jsonwebtoken"
 
 export const register = async(req,res,next)=>{
 
@@ -27,11 +28,16 @@ export const login = async(req,res, next)=>{
 
         const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password)
         if(!isPasswordCorrect) return next( createError(404, "user not founded"))
+        const token = jwt.sign({id:user._id, isAdmine:user.isAdmine}, process.env.JWT)
+
         const {password, isAdmine, ...otherDetails} = user._doc;
-        res.status(200).json({...otherDetails});
+        res.cookie("access_token", token,{
+            httpOnly:true,
+        }).status(200).json({...otherDetails});
         
     }
-    catch {
+    catch(err) {
         next(err)
     }
 }
+
