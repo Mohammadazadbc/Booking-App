@@ -1,0 +1,1 @@
+This is a full-stack project with React and Node.js. It is an absolutely amazing project that allows you to book hotels. You can search for hotels in different cities, filter by price, number of people, date, and the number of rooms. You can also create an account or log in, and then proceed to reserve a room.
